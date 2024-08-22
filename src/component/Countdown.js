@@ -68,13 +68,15 @@ const Countdown = () => {
                 </p>
             </div>
 
-            <div className='grid grid-cols-3 gap-2 mx-3 border border-dashed border-[#E0E8C5] mt-16 relative'>
-                <img src={BungaImage1} alt="BungaImage1" />
-                <img src={BungaImage2} alt="BungaImage2" />
-                <img src={BungaImage3} alt="BungaImage3" />
+            <div>
+                <div className='grid grid-cols-3 gap-2 mx-3 border border-dashed border-[#E0E8C5] mt-16 relative'>
+                    <img src={BungaImage1} alt="BungaImage1" />
+                    <img src={BungaImage2} alt="BungaImage2" />
+                    <img src={BungaImage3} alt="BungaImage3" />
 
+                </div>
                 {/* date  */}
-                <div className='absolute bottom-2 w-full flex justify-center'>
+                <div className='mt-5 w-full flex justify-center'>
                     <p className='text-[#F2B4B3] f-arya-regular text-4xl'>03.11.2024</p>
                 </div>
             </div>
