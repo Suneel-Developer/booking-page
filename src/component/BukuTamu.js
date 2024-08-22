@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HistoryIcon from "../assets/history-icon.svg";
 import messageIcon from "../assets/Rectangle 14.png";
 import BungaBukuTumu1 from "../assets/bunga-buku-tamu-1.png";
@@ -7,6 +7,51 @@ import BungaBukuTumu2 from "../assets/bunga-buku-tamu-2.png";
 const BukuTamu = () => {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formData, setFormData] = useState({ name: '', message: '' });
+    const [guestBookEntries, setGuestBookEntries] = useState([]);
+
+    useEffect(() => {
+        const fetchGuestBookEntries = async () => {
+            try {
+                // Mocked API response
+                const mockResponse = [
+                    {
+                        id: 1,
+                        name: 'John Doe',
+                        message: 'Congratulations!',
+                        timestamp: '1 minggu, 4 hari lalu',
+                        status: 'Hadir',
+                    },
+                    {
+                        id: 2,
+                        name: 'Jane Smith',
+                        message: 'Best wishes!',
+                        timestamp: '2 minggu, 3 hari lalu',
+                        status: 'Hadir',
+                    },
+                    {
+                        id: 3,
+                        name: 'Alice Brown',
+                        message: 'Happy wedding!',
+                        timestamp: '3 minggu, 2 hari lalu',
+                        status: 'Hadir',
+                    },
+                    {
+                        id: 4,
+                        name: 'John Doe',
+                        message: 'Congratulations!',
+                        timestamp: '1 minggu, 4 hari lalu',
+                        status: 'Hadir',
+                    },
+                ];
+
+                setGuestBookEntries(mockResponse);
+            } catch (error) {
+                console.error('Error fetching guest book entries:', error);
+            }
+        };
+
+        fetchGuestBookEntries();
+    }, []);
 
     const openForm = () => {
         setIsFormOpen(true);
@@ -47,78 +92,26 @@ const BukuTamu = () => {
                 <h1 className='text-center text-[#34352F] f-arya-regular text-5xl mb-2'>BUKU TAMU</h1>
                 <div className='mx-auto h-[2px] bg-[#34352F] w-40 mb-16'></div>
 
-                <div className='flex flex-col gap-8 h-[400px] pr-3 overflow-y-auto boxscrollbar'>
-                    <div className='flex items-start gap-3'>
-                        <div className='bg-[#626D6B] w-16 h-16 rounded-full'></div>
-                        <div className='flex-1'>
-                            <div className='flex gap-2 items-center'>
-                                <h2 className='text-[#34352F] f-montserrat-medium text-xl truncate line-clamp-1 text-balance'>Lorem Ipsum</h2>
-                                <div className='bg-[#626D6B] rounded-[3px] px-3 text-center leading-1 h-6 text-white flex items-center justify-center f-montserrat-medium text-xs'>Hadir</div>
-                            </div>
-                            <div className='flex items-center gap-1 mt-1'>
-                                <img src={HistoryIcon} alt="HistoryIcon" />
-                                <p className='text-[#34352F] f-montserrat-medium text-sm'>1 minggu, 4 hari lalu</p>
-                            </div>
-                            <div className='bg-[#626D6B] rounded-lg p-4 relative w-full mt-2 text-white f-montserrat-medium text-base'>
-                                Uhuyy Uhuyy  =
-                                <img src={messageIcon} alt="messageIcon" className='absolute -left-[14px] top-0 h-14' />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='flex items-start gap-3'>
-                        <div className='bg-[#626D6B] w-16 h-16 rounded-full'></div>
-                        <div className='flex-1'>
-                            <div className='flex gap-2 items-center'>
-                                <h2 className='text-[#34352F] f-montserrat-medium text-xl truncate line-clamp-1 text-balance'>Lorem Ipsum</h2>
-                                <div className='bg-[#626D6B] rounded-[3px] px-3 text-center leading-1 h-6 text-white flex items-center justify-center f-montserrat-medium text-xs'>Hadir</div>
-                            </div>
-                            <div className='flex items-center gap-1 mt-1'>
-                                <img src={HistoryIcon} alt="HistoryIcon" />
-                                <p className='text-[#34352F] f-montserrat-medium text-sm'>1 minggu, 4 hari lalu</p>
-                            </div>
-                            <div className='bg-[#626D6B] rounded-lg p-4 relative w-full mt-2 text-white f-montserrat-medium text-base'>
-                                Uhuyy Uhuyy  =
-                                <img src={messageIcon} alt="messageIcon" className='absolute -left-[14px] top-0 h-14' />
+                <div className='flex flex-col gap-8 h-[400px] pr-3 py-5 overflow-y-auto boxscrollbar'>
+                    {guestBookEntries.map(entry => (
+                        <div key={entry.id} className='flex items-start gap-3'>
+                            <div className='bg-[#626D6B] w-16 h-16 rounded-full'></div>
+                            <div className='flex-1'>
+                                <div className='flex gap-2 items-center'>
+                                    <h2 className='text-[#34352F] f-montserrat-medium text-xl truncate line-clamp-1 text-balance'>{entry.name}</h2>
+                                    <div className='bg-[#626D6B] rounded-[3px] px-3 text-center leading-1 h-6 text-white flex items-center justify-center f-montserrat-medium text-xs'>{entry.status}</div>
+                                </div>
+                                <div className='flex items-center gap-1 mt-1'>
+                                    <img src={HistoryIcon} alt="HistoryIcon" />
+                                    <p className='text-[#34352F] f-montserrat-medium text-sm'>{entry.timestamp}</p>
+                                </div>
+                                <div className='bg-[#626D6B] rounded-lg p-4 relative w-full mt-2 text-white f-montserrat-medium text-base'>
+                                    {entry.message}
+                                    <img src={messageIcon} alt="messageIcon" className='absolute -left-[14px] top-0 h-14' />
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className='flex items-start gap-3'>
-                        <div className='bg-[#626D6B] w-16 h-16 rounded-full'></div>
-                        <div className='flex-1'>
-                            <div className='flex gap-2 items-center'>
-                                <h2 className='text-[#34352F] f-montserrat-medium text-xl truncate line-clamp-1 text-balance'>Lorem Ipsum</h2>
-                                <div className='bg-[#626D6B] rounded-[3px] px-3 text-center leading-1 h-6 text-white flex items-center justify-center f-montserrat-medium text-xs'>Hadir</div>
-                            </div>
-                            <div className='flex items-center gap-1 mt-1'>
-                                <img src={HistoryIcon} alt="HistoryIcon" />
-                                <p className='text-[#34352F] f-montserrat-medium text-sm'>1 minggu, 4 hari lalu</p>
-                            </div>
-                            <div className='bg-[#626D6B] rounded-lg p-4 relative w-full mt-2 text-white f-montserrat-medium text-base'>
-                                Uhuyy Uhuyy  =
-                                <img src={messageIcon} alt="messageIcon" className='absolute -left-[14px] top-0 h-14' />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='flex items-start gap-3'>
-                        <div className='bg-[#626D6B] w-16 h-16 rounded-full'></div>
-                        <div className='flex-1'>
-                            <div className='flex gap-2 items-center'>
-                                <h2 className='text-[#34352F] f-montserrat-medium text-xl truncate line-clamp-1 text-balance'>Lorem Ipsum</h2>
-                                <div className='bg-[#626D6B] rounded-[3px] px-3 text-center leading-1 h-6 text-white flex items-center justify-center f-montserrat-medium text-xs'>Hadir</div>
-                            </div>
-                            <div className='flex items-center gap-1 mt-1'>
-                                <img src={HistoryIcon} alt="HistoryIcon" />
-                                <p className='text-[#34352F] f-montserrat-medium text-sm'>1 minggu, 4 hari lalu</p>
-                            </div>
-                            <div className='bg-[#626D6B] rounded-lg p-4 relative w-full mt-2 text-white f-montserrat-medium text-base'>
-                                Uhuyy Uhuyy  =
-                                <img src={messageIcon} alt="messageIcon" className='absolute -left-[14px] top-0 h-14' />
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
 
                 <div className='flex justify-center w-full mt-10'>
